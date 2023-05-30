@@ -1,8 +1,9 @@
-
+.PHONY: build
 
 GIT_SHA=$(shell git rev-parse HEAD)
 
 
-docker:
+build:
 	docker build . \
-	-t tt:$(GIT_SHA)
+	-t tt:$(GIT_SHA) \
+	-t tt:latest
