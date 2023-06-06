@@ -21,3 +21,5 @@ COPY . .
 
 # RUN ${MAKE}
 
+CMD [ "go", "run", "test.go" ]
+
