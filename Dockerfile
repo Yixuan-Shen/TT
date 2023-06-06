@@ -19,3 +19,5 @@ RUN [ ! -d "vendor" ] && go mod download all || echo "skipping..."
 COPY . .
 
 # RUN ${MAKE}
+
+CMD [ "go", "run", "test.go" ]
