@@ -1,9 +1,3 @@
-package main
+package tt
 
-import (
-	"fmt"
-)
-
-func main() {
-	fmt.Println("")
-}
+var Version string = "to be replaced by makefile"

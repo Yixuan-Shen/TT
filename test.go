@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func main()  {
+func main() {
 	currentTime := time.Now().UnixNano()
 	fmt.Println("Current Timestamp: ", currentTime)
 }
