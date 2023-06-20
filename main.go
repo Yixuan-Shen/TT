@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"github.com/google/uuid"
 )
 
 type Duration struct {
@@ -14,6 +15,15 @@ type Duration struct {
 	StartingTime int64
 	EndingTime   int64
 	Distance     float64
+}
+
+type Device struct {
+	// Device ID
+	ID uuid.UUID
+	// Device Name
+	Name string
+	// Device Distance
+	Distance float64
 }
 
 const BluetoothDisConst = 0.00000029981 / 2
@@ -43,10 +53,21 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: homePage")
 }
 
+func AllDevices(w http.ResponseWriter, r *http.Request) {
+	pseudoDevices := []Device{
+		Device{uuid.New(), "Device1", 0.0},
+		Device{uuid.New(), "Device2", 30.0},
+		Device{uuid.New(), "Device3", 27.0},
+	}
+	json.NewEncoder(w).Encode(pseudoDevices)
+	fmt.Println("Endpoint Hit: AllDevices")
+}
+
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/currentDistanceJson", currentDistancePage)
+	myRouter.HandleFunc("/currentDistance", currentDistancePage)
+	myRouter.HandleFunc("/devices", AllDevices)
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
 }
 
