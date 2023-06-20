@@ -32,18 +32,6 @@ const BluetoothDisConst = 0.00000029981 / 2
 
 var initTime int64
 
-func distanceCalculation_oneway(sendT, receiveT int64) (distance float64) {
-	electronmaticWave := 0.00029981
-	receiveTime := receiveT - sendT
-	distance = float64(receiveTime) * electronmaticWave
-	fmt.Printf("The distance from the device1 is %.2f M.\n", distance)
-	return
-}
-
-func onewayDistancePage(w http.ResponseWriter, r *http.Request) {
-	currentTime := time.Now().UnixNano()
-}
-
 func DistanceCal(time1, time2 int64) float64 {
 	Duration := time2 - time1
 	Distance := BluetoothDisConst * float64(Duration) // pseudo number for algo
