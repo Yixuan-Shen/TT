@@ -1,6 +1,7 @@
 package main
 
 import (
+	"container/list"
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
@@ -23,7 +24,8 @@ type Device struct {
 	// Device Name
 	Name string
 	// Device Distance
-	Distance float64
+	Distance_m float64
+	//phone number
 }
 
 const BluetoothDisConst = 0.00000029981 / 2
@@ -32,7 +34,8 @@ const BluetoothDisConst = 0.00000029981 / 2
 
 var initTime int64
 
-func distanceCalculation_oneway(sendT, receiveT int64) (distance float64) {
+// Calculate for the oneway distance between two devices
+func distanceCal_oneway(sendT, receiveT int64) (distance float64) {
 	electronmaticWave := 0.00029981
 	receiveTime := receiveT - sendT
 	distance = float64(receiveTime) * electronmaticWave
@@ -40,16 +43,27 @@ func distanceCalculation_oneway(sendT, receiveT int64) (distance float64) {
 	return
 }
 
+// One way distacne runner function
 func onewayDistancePage(w http.ResponseWriter, r *http.Request) {
-	currentTime := time.Now().UnixNano()
+	sendTime := time.Now().UnixNano()
+	fmt.Println("The time sent by another device is ->", sendTime)
+	receiveTime := time.Now().UnixNano()
+	fmt.Println("The time received by our device is ->", receiveTime)
+	distance := distanceCal_oneway(sendTime, receiveTime)
+	newDuration := Duration{sendTime, receiveTime, distance}
+	json.NewEncoder(w).Encode(newDuration)
+	fmt.Println("The distance between two devices is ->", distance)
+	fmt.Println("Endpoint Hit: current_onewayDistancePage")
 }
 
+// Calculate for the round distance between two devices
 func DistanceCal(time1, time2 int64) float64 {
 	Duration := time2 - time1
 	Distance := BluetoothDisConst * float64(Duration) // pseudo number for algo
 	return Distance
 }
 
+// The round distacne runner function
 func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 	currentTime := time.Now().UnixNano()
 	// fmt.Println("Current Timestamp: ", currentTime)
@@ -60,27 +74,80 @@ func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: currentDistancePage")
 }
 
-func homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Init Time reset!\n")
-	initTime = time.Now().UnixNano()
-	fmt.Println("Endpoint Hit: homePage")
-}
-
+// Show all the devices on the API
 func AllDevices(w http.ResponseWriter, r *http.Request) {
+	currentTime1 := time.Now().UnixNano()
 	pseudoDevices := []Device{
-		Device{uuid.New(), "Device1", 0.0},
-		Device{uuid.New(), "Device2", 30.0},
-		Device{uuid.New(), "Device3", 27.0},
+		Device{uuid.New(), "Device1", DistanceCal(initTime, currentTime1)},
+		Device{uuid.New(), "Device2", 30},
+		Device{uuid.New(), "self", 0},
 	}
 	json.NewEncoder(w).Encode(pseudoDevices)
 	fmt.Println("Endpoint Hit: AllDevices")
 }
 
+// INitialize the deviceList
+func initializeDL() (deviceList *list.List) {
+	deviceList = list.New()
+	return deviceList
+}
+
+func updateDeviceList(nearbyDeviceList *list.List, name string, distance float64) *list.List {
+	nearbyDeviceList.PushBack(Device{uuid.New(), name, distance})
+	return nearbyDeviceList
+}
+
+func clearDeviceList(deviceList *list.List) {
+	deviceList = list.New()
+}
+
+// Search and connect the nearby device
+func connection(w http.ResponseWriter, r *http.Request) {
+	nearbyDeviceList := initializeDL() //create a new list
+	var numberOfDevice int64
+	fmt.Printf("Type the number of device you want to search:\n")
+	fmt.Scanln(&numberOfDevice)
+	var index int64
+	//append new element in list for numberOfDevice times
+	for index = 0; index < numberOfDevice; index++ {
+		var searchD string
+		fmt.Printf("Type the name of the device you want to search:\n")
+		fmt.Scanln(&searchD)
+		currentTime := time.Now().UnixNano()
+		updateDeviceList(nearbyDeviceList, searchD, DistanceCal(initTime, currentTime))
+	}
+	fmt.Fprintf(w, "Scanning the nearby Devices...\n...\n")
+	fmt.Fprintf(w, "Device been find as following:\n")
+	//json.NewEncoder(w).Encode(nearbyDeviceList)
+	//print the element in the list to the API website
+	for element := nearbyDeviceList.Front(); element != nil; element = element.Next() {
+		value := element.Value.(Device)
+		fmt.Fprintf(w, "ID: %s, Name: %s, Distance: %fm\n", value.ID, value.Name, value.Distance_m)
+	}
+	fmt.Println("Endpoint Hit: connection")
+}
+
+// access the homepage
+func homepage(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Welcome to the homepage of TT. X_x\n")
+	fmt.Fprintf(w, "(Init Time reset!)\n")
+	initTime = time.Now().UnixNano()
+	fmt.Fprintf(w, "There are several features that we can use on this API:\n")
+	fmt.Fprintf(w, "+---------------------------------------+\n")
+	fmt.Fprintf(w, "/currentDistance -> round distance\n/devices -> devices info\n/currentOnewayDistance -> one way distance\n")
+	fmt.Fprintf(w, "+---------------------------------------+\n")
+	fmt.Fprintf(w, "\n\n\n\n\n\n\n\n\n\n\nFounder: Yixuan Shen, HanZhen Qin, Kaiyang Chang\n")
+	fmt.Println("Endpoint Hit: homepage")
+}
+
+// Handle the function link to the website
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/", homePage)
+	myRouter.HandleFunc("/", homepage)
 	myRouter.HandleFunc("/currentDistance", currentDistancePage)
 	myRouter.HandleFunc("/devices", AllDevices)
+	myRouter.HandleFunc("/currentOnewayDistance", onewayDistancePage)
+	myRouter.HandleFunc("/connection", connection)
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
 }
 
