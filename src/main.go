@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
@@ -76,13 +77,7 @@ func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 
 // Show all the devices on the API
 func AllDevices(w http.ResponseWriter, r *http.Request) {
-	currentTime1 := time.Now().UnixNano()
-	pseudoDevices := []Device{
-		Device{uuid.New(), "Device1", DistanceCal(initTime, currentTime1)},
-		Device{uuid.New(), "Device2", 30},
-		Device{uuid.New(), "self", 0},
-	}
-	json.NewEncoder(w).Encode(pseudoDevices)
+	json.NewEncoder(w).Encode(devices)
 	fmt.Println("Endpoint Hit: AllDevices")
 }
 
@@ -140,19 +135,87 @@ func homepage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: homepage")
 }
 
+func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	uuidStr := vars["uuid"]
+	UUID, _ := uuid.Parse(uuidStr)
+
+	fmt.Println(`UUID: ` + uuidStr)
+	fmt.Println("Endpoint Hit: getDeviceWithID")
+
+	for _, device := range devices {
+		if device.ID == UUID {
+			json.NewEncoder(w).Encode(device)
+			fmt.Println("device found with UUID: " + uuidStr)
+			return
+		}
+	}
+
+	fmt.Println("No device found")
+	fmt.Fprintf(w, "No device found")
+}
+
+func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	uuidStr := vars["uuid"]
+	UUID, _ := uuid.Parse(uuidStr)
+
+	fmt.Fprintf(w, `UUID: `+uuidStr)
+	fmt.Println("Endpoint Hit: deleteDeviceWithID")
+
+	for index, device := range devices {
+		if device.ID == UUID {
+			devices = append(devices[:index], devices[index+1:]...)
+			fmt.Fprintf(w, "Device deleted")
+			return
+		}
+	}
+
+	fmt.Fprintf(w, "No device found")
+}
+
+func addDeviceWithID(w http.ResponseWriter, r *http.Request) {
+	requestBody, _ := ioutil.ReadAll(r.Body)
+	var device Device
+	json.Unmarshal(requestBody, &device)
+
+	for _, d := range devices {
+		if d.ID == device.ID {
+			fmt.Fprintf(w, "Device already exists")
+			return
+		}
+	}
+
+	devices = append(devices, device)
+	fmt.Fprintf(w, "Device added")
+}
+
 // Handle the function link to the website
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homepage)
 	myRouter.HandleFunc("/currentDistance", currentDistancePage)
-	myRouter.HandleFunc("/devices", AllDevices)
+	myRouter.HandleFunc("/devices", AllDevices).Methods("GET")
+
+	myRouter.HandleFunc("/device", addDeviceWithID).Methods("POST")
+	myRouter.HandleFunc("/device/{uuid}", getDeviceWithID).Methods("GET")
+	myRouter.HandleFunc("/device/{uuid}", deleteDeviceWithID).Methods("DELETE")
+
 	myRouter.HandleFunc("/currentOnewayDistance", onewayDistancePage)
 	myRouter.HandleFunc("/connection", connection)
+
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
+}
+
+var devices = []Device{
+	Device{uuid.New(), "Device1", 50},
+	Device{uuid.New(), "Device2", 30},
+	Device{uuid.New(), "self", 0},
 }
 
 func main() {
 	initTime = time.Now().UnixNano()
+
 	fmt.Println("REST API with Mux Routers")
 	fmt.Println("Server Started at: http://localhost:10000/")
 	handleRequests()
