@@ -4,12 +4,13 @@ import (
 	"container/list"
 	"encoding/json"
 	"fmt"
-	"github.com/google/uuid"
-	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/google/uuid"
+	"github.com/gorilla/mux"
 )
 
 type Duration struct {
@@ -175,6 +176,7 @@ func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {
 }
 
 func addDeviceWithID(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Endpoint Hit: addDeviceWithID")
 	requestBody, _ := ioutil.ReadAll(r.Body)
 	var device Device
 	json.Unmarshal(requestBody, &device)
@@ -215,7 +217,6 @@ var devices = []Device{
 
 func main() {
 	initTime = time.Now().UnixNano()
-
 	fmt.Println("REST API with Mux Routers")
 	fmt.Println("Server Started at: http://localhost:10000/")
 	handleRequests()
