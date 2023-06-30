@@ -13,6 +13,7 @@ build-with-hash:
 
 run:
 	docker run -it		\
+	-p 10000:10000		\
 	--rm				\
 	--name TT			\
 	tt:latest

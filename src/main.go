@@ -129,14 +129,14 @@ func connection(w http.ResponseWriter, r *http.Request) {
 
 // access the homepage
 func homepage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the homepage of TT. X_x\n")
-	fmt.Fprintf(w, "(Init Time reset!)\n")
 	initTime = time.Now().UnixNano()
-	fmt.Fprintf(w, "There are several features that we can use on this API:\n")
-	fmt.Fprintf(w, "+---------------------------------------+\n")
-	fmt.Fprintf(w, "/currentDistance -> round distance\n/devices -> devices info\n/currentOnewayDistance -> one way distance\n")
-	fmt.Fprintf(w, "+---------------------------------------+\n")
-	fmt.Fprintf(w, "\n\n\n\n\n\n\n\n\n\n\nFounder: Yixuan Shen, HanZhen Qin, Kaiyang Chang\n")
+	// fmt.Fprintf(w, "Welcome to the homepage of TT. X_x\n")
+	// fmt.Fprintf(w, "(Init Time reset!)\n")
+	// fmt.Fprintf(w, "There are several features that we can use on this API:\n")
+	// fmt.Fprintf(w, "+---------------------------------------+\n")
+	// fmt.Fprintf(w, "/currentDistance -> round distance\n/devices -> devices info\n/currentOnewayDistance -> one way distance\n")
+	// fmt.Fprintf(w, "+---------------------------------------+\n")
+	// fmt.Fprintf(w, "\n\n\n\n\n\n\n\n\n\n\nFounder: Yixuan Shen, HanZhen Qin, Kaiyang Chang\n")
 	fmt.Println("Endpoint Hit: homepage")
 }
 
@@ -152,14 +152,8 @@ func handleRequests() {
 }
 
 func main() {
-	// currentTime1 := time.Now().UnixNano()
-	// fmt.Println("Current Timestamp: ", currentTime1)
-	// time.Sleep(30 * time.Microsecond) // Simulate bluetooth connection and passing time
-	// currentTime2 := time.Now().UnixNano()
-	// fmt.Println("Current Timestamp: ", currentTime2)
-	// dis := DistanceCal(currentTime1, currentTime2)
-	// fmt.Println(dis)
 	initTime = time.Now().UnixNano()
 	fmt.Println("REST API with Mux Routers")
+	fmt.Println("Server Started at: http://localhost:10000/")
 	handleRequests()
 }
