@@ -381,3 +381,98 @@ header {
   box-shadow: 10px -3px 0 -2px rgba(254, 177, 3, 0.59), 3px -15px 1px -7px rgba(254, 177, 3, 0.4), 11px -17px 1px -7px rgba(254, 177, 3, 0.4), 19px -13px 1px -7px rgba(254, 177, 3, 0.4), 22px -4px 1px -7px rgba(254, 177, 3, 0.4);
   border-radius: 50%;
 }
+
+.m-player {
+  position: relative;
+  width: 100%;
+}
+.m-player > h2 {
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+.m-player .player {
+  border-radius: 10px;
+  padding: 15px;
+  background-image: linear-gradient(to right, #59a2fb 0%, #3976f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.24);
+}
+.m-player .artist {
+  margin-right: auto;
+  margin-left: 15px;
+}
+.m-player .artist p {
+  margin: 0;
+  font-weight: 600;
+}
+.m-player .disc {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-image: linear-gradient(50deg, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.15) 31%, rgba(255, 255, 255, 0) 72%), linear-gradient(-50deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0) 60%), repeating-radial-gradient(circle, #444 0, #444 2px, gray 2px, #545454 3px);
+  position: relative;
+}
+.m-player .disc::before, .m-player .disc::after {
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border-radius: 50%;
+}
+.m-player .disc::before {
+  width: 20px;
+  height: 20px;
+  background: black;
+  border: 2px solid #5d5d5d;
+}
+.m-player .disc::after {
+  width: 8px;
+  height: 8px;
+  background: white;
+}
+.m-player .control {
+  width: 52px;
+  height: 10px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.61) 2px, transparent 2px), linear-gradient(to right, rgba(255, 255, 255, 0.61) 2px, transparent 2px), linear-gradient(to right, white 4px, transparent 0), linear-gradient(to right, white 4px, transparent 0);
+  background-position: 0 0, 47px 0, 20px 0, 26px 0;
+  background-size: 2px 12px, 2px 12px, 4px 12px, 4px 12px;
+  background-repeat: no-repeat;
+  position: relative;
+  cursor: pointer;
+  transition: 200ms;
+}
+.m-player .control::after, .m-player .control::before {
+  content: "";
+  position: absolute;
+  border-width: 6px;
+  border-style: solid;
+  top: -1px;
+}
+.m-player .control::before {
+  left: -2px;
+  border-color: transparent rgba(255, 255, 255, 0.61) transparent transparent;
+}
+.m-player .control::after {
+  right: 1px;
+  border-color: transparent transparent transparent rgba(255, 255, 255, 0.61);
+}
+.m-player .controls input {
+  display: none;
+}
+.m-player .controls input:checked + label .control {
+  background-size: 2px 12px, 2px 12px, 0 0, 0 0;
+  background-position: 6px 0, 40px 0, 20px 0, 26px 0;
+}
+.m-player .controls input:checked + label .control::after {
+  right: 18px;
+}
+.m-player .controls input:checked + label .control::before {
+  left: -2px;
+  border-width: 0;
+}

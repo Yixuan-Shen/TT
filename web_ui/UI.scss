@@ -508,3 +508,22 @@ header {
       border-color: transparent transparent transparent rgba(white, 0.61);
     }
   }
+  .controls {
+    input {
+      display: none;
+      &:checked + label {
+        .control {
+          background-size: 2px 12px, 2px 12px, 0 0, 0 0;
+          background-position: 6px 0, 40px 0, 20px 0, 26px 0;
+          &::after {
+            right: 18px;
+          }
+          &::before {
+            left: -2px;
+            border-width: 0;
+          }
+        }
+      }
+    }
+  }
+}
