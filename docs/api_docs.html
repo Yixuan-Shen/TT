@@ -4,23 +4,37 @@
         <title>API docs for EdgeX-TT: version 0.1</title>
         <!-- import links to use -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-   	 	<link href="http://www.rpi.edu/favicon.ico" type="image/ico" rel="icon"/>
-   		<link href="http://www.rpi.edu/favicon.ico" type="image/ico" rel="shortcut icon"/>
-        <style type="text/css">
-        /* 这个是CSS部分的注释，<!-- -->是html部分的注释 */
-        /* <style></ 这一部分是css的具体内容，每个内容都控制的body部分的格式，字体等等 */
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-            /* 这一段是说明了body部分的字体类型 */
-        }
-        #content {
-            margin: 0 auto;
-            padding: 3em 2em;
-            max-width: 800px;
-            }
-        </style>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    	<!-- the line above is used to let js effect be available -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<!-- use for some interesting sign on website -->
+        <link rel="stylesheet" href="api_docs.css"/>
+        <!-- link to a css file -->
     </head>
-    
+    <header>
+        <h1>API docs for EdgeX-TT: version 0.1</h1>
+        <p>Founder: Hanzhen Qin, Yixuan Shen, Kaiyang Chang</p>
+        <nav>
+            <ul>
+				<li><a href="Summer_2023_EdgeX_Plan.pdf" target="_blank"><button>about us</button></a></li>
+				<li><a href="https://github.com/Yixuan-Shen/TT" target="_blank"><button>Github</button></a></li>
+            </ul>
+        </nav>
+    </header>
     <body>
+        <div id = "introduction">
+            <h1>Introduction <a href="#" class="social-icon"><i class="material-icons">computer</i></a>EdgeX-TT<a href="#" class="social-icon"><i class="material-icons">wifi</i></a></h1>
+            <p>
+                You can interact with the API through HTTP requests. If you want to see the detail about our
+                program EdgeX-TT, you can click the "about us" button above.
+                This program is using the programming languages: golang, C++, html/css.
+            </p>
+        </div>
+        <div id = "license">
+            <h1>License</h1>
+            <p>License</p>
+            <p>[Apache-2.0](LICENSE)</p>
+        </div>
     </body>
 </html>

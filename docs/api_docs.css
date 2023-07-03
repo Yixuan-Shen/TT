@@ -1,0 +1,57 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(27, 25, 25);
+    background-color: white;
+    font-size: 18px;
+    font-weight: normal; 
+}
+
+h1{
+    font-size: 1.5em;
+    margin: 0;
+}
+
+header{
+    background-color: rgb(247, 228, 247);
+    position: relative;
+    width: 94.4%;
+    height: 100%;
+    padding: 40px;
+}
+
+nav li{
+    display: inline-table;
+    font-size: 60px;
+    padding: 10px;
+}
+
+nav{
+    position: absolute;
+    top:30px;
+    right:130px;
+}
+
+button{
+    padding: 7px 15px;
+    color: white;
+    background-color: black;
+}
+
+/* change the color when the mouse arrow attch the button */
+button:hover{
+    background-color: pink;
+}
+
+/* change the color when the arrow click the button*/
+button:active{
+    background-color: rgb(128, 196, 230);
+}
+
+#introduction h1{
+    font-family: "Andale Mono", monospace;
+    font-size: 30px;
+}
+
+.social-icon{
+	color: mediumpurple;
+}
