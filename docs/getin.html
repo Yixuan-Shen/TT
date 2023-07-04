@@ -3,32 +3,116 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Use for the sign of chinese app -->
     <script
-      src="https://kit.fontawesome.com/64d58efce2.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="style.css" />
-    <title>xx</title>
+      src="https://kit.fontawesome.com/64d58efce2.js"crossorigin="anonymous"></script>
+    <!-- Use for some other sign -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>API docs for EdgeX-TT: version 0.1</title>
+    <!-- import links to use -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- the line above is used to let js effect be available -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- use for some interesting sign on website -->
+    <link rel="stylesheet" href="getin.css"/>
+    <!-- link to a css file -->
   </head>
   <body>
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
           <form action="#" class="sign-in-form">
-            <h2 class="title">xx</h2>
+            <h2 class="title">LOGIN</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="xx" />
+              <input type="text" placeholder="User name" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="xx" />
+              <input type="password" placeholder="Password" />
             </div>
-            <input type="submit" value="xx" class="btn solid" />
-            <p class="social-text">xx</p>
+            <button><a href="club.html">Login in</a></button>
+            <!-- <input type="submit" value="Love Y❤️U" class="btn solid" />  -->
+            <p class="social-text">Other method</p>
+            <div class="social-media">
+              <a href="#" class="social-icon">
+                <i class="material-icons">face</i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-weixin"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="material-icons">cloud</i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="material-icons">computer</i>
+              </a>
+            </div>
+          </form>
+          <form action="#" class="sign-up-form">
+            <h2 class="title">SIGN UP</h2>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="User name" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-envelope"></i>
+              <input type="email" placeholder="email📮" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Password" />
+            </div>
+            <!-- <input type="submit" class="btn" value="Click Go to login" /> -->
+            <p class="social-text">Other method</p>
             <div class="social-media">
               <a href="#" class="social-icon">
                 <i class="fab fa-qq"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-weixin"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="material-icons">computer</i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="material-icons">thumb_up</i>
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
 
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>Join us</h3>
+            <p>
+             Everyone has a dream and a thought, try and be somebody -- TRY.com
+            </p>
+            <button class="btn transparent" id="sign-up-btn">
+             Go to sign up
+            </button>
+          </div>
+          <img src="8.jpeg" class="image" alt="" />
+        </div>
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>already have an account?</h3>
+            <p>
+             You are the hero of your own story. We see......
+            </p>
+            <button class="btn transparent" id="sign-in-btn">
+              Go to login in
+            </button>
+          </div>
+            <img src="2.jpeg" class="image" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
   </body>
 </html>
