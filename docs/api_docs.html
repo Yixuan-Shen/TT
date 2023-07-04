@@ -103,7 +103,7 @@
                  */
                 <h3>API show [GET]</h3>
                 <p>
-                    Uing the GET command in postman, and type: http://localhost:10000/connection, then type the information in terminal.<br>
+                    Using the GET command in postman, and type: http://localhost:10000/connection, then type the information in terminal.<br>
                     <p><img src="./photo/post1.png" width="40%" height="300px"></p>
                     <p><img src="./photo/post2.png" width="30%" height="250px"></p>
                     <p><img src="./photo/post3.png" width="40%" height="350px"></p>
@@ -117,10 +117,10 @@
             <h2>Features:</h2>
             <ul><p>
                 onewayDistancePage -> /currentOnewayDistance: GET<br>
-                currentDistancePage -> /currentDistance: GET<br> 
-                connection -> /connection: GET<br> 
-                AllDevices -> /devices: GET<br> 
+                currentDistancePage -> /currentDistance: GET<br>
+                connection -> /connection: GET<br>
                 homepage -> /: GET<br>
+                AllDevices -> /devices: GET<br>
                 getDeviceWithID -> /device/{uuid}: GET<br>
                 addDeviceWithID -> /device: POST<br>
                 deleteDeviceWithID -> /device/{uuid}: DELETE<br>
@@ -132,7 +132,7 @@
                 func homepage(w http.ResponseWriter, r *http.Request) {}<br>
                 <p><img src="./photo/func5.png" width="25%" height="130px"></p>
                 <h3>API show [GET]</h3>
-                Uing the GET command in postman, and type: http://localhost:10000/, get in the main page.<br>
+                Using the GET command in postman, and type: http://localhost:10000/, get in the main page.<br>
                 <p><img src="./photo/post0.png" width="40%" height="300px"></p>
             </p>
             <br>
@@ -143,7 +143,7 @@
                 /* The function(AllDevices) can use to check the info of all devices. Also can use with DELETE and POST. 
                 Will see the different after we delete a device or add a new device. */
                 <h3>API show [GET]</h3>
-                Uing the GET command in postman, and type: http://localhost:10000/devices, get all the devices info.<br>
+                Using the GET command in postman, and type: http://localhost:10000/devices, get all the devices info.<br>
                 <p><img src="./photo/post6.png" width="40%" height="300px"></p>
             </p>
             <br>
@@ -153,11 +153,39 @@
                 <p><img src="./photo/func9.png" width="30%" height="300px"></p>
                 /* Search only one device info in the database, search by the ID of the corresponding device. */
                 <h3>API show [GET]</h3>
-                Uing the GET command in postman, and type: http://localhost:10000/device/{uuid}, get the certain device information.<br>
+                Using the GET command in postman, and type: http://localhost:10000/device/{uuid}, get the certain device information.<br>
                 <p><img src="./photo/post7.png" width="40%" height="300px"></p>
             </p>
             <br>
-
+            <p>
+                <h2>addDeviceWithID</h2>
+                func addDeviceWithID(w http.ResponseWriter, r *http.Request) {}
+                <p><img src="./photo/func10.png" width="30%" height="300px"></p>
+                /* Add a new device information. Can type new id, new name, new distance. */
+                <h3>API show [POST]</h3>
+                Using the GET function http://localhost:10000/devices, get all devices information first.<br>
+                <p><img src="./photo/post8.png" width="40%" height="300px"></p>
+                Then using the POST command in postman, and type: http://localhost:10000/device. Click the button(body) and turn to (raw, json).<br>
+                Then type the information in json, FE: {"ID":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","Name":"xxx...","Distance_m":x} -> click the send button.<br>
+                <p><img src="./photo/post9.png" width="40%" height="270px"></p>
+                Lastly, click the GET function http://localhost:10000/devices again, we will see new device information is added.<br>
+                <p><img src="./photo/post10.png" width="40%" height="300px"></p>
+            </p>
+            <br>
+            <p>
+                <h2>deleteDeviceWithID</h2>
+                func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {}
+                <p><img src="./photo/func11.png" width="30%" height="300px"></p>
+                /* Search the id first, if find the id successfully, then delete from the device container. */
+                <h3>API show [POST]</h3>
+                Using the GET function http://localhost:10000/devices, get all devices information first.<br>
+                <p><img src="./photo/post10.png" width="40%" height="300px"></p>
+                Then using the DELETE command in postman, and type: http://localhost:10000/device/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx(the id) -> click the send button.<br>
+                If the system find the corresponding id, then the device will be deleted.<br>
+                <p><img src="./photo/post11.png" width="40%" height="300px"></p>
+                Finally, click the GET function http://localhost:10000/devices again, we will see the change.<br>
+                <p><img src="./photo/post8.png" width="40%" height="300px"></p>
+            </p>
         </div>
     </body>
 </html>
