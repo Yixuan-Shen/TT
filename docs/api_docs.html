@@ -47,22 +47,6 @@
             <h1>API function</h1>
             <p>The API for our program is a RESTful API in GO. The following information will show the features that</p>
             <p>
-                <h2>Functions:</h2>
-                func distanceCal_oneway(senT, receiveT int64) (distance float64) {}<br>
-                func onewayDistancePage(w http.ResponseWriter, r *http.Request) {}<br>
-                <p><img src="./photo/func1.png" width="30%" height="350px"></p>
-                /* Calculate the oneway distance from one device to another device. */
-            </p>
-            <hr>
-            <p>
-                <h2>Functions:</h2>
-                func DistanceCal(time1, time2 int64) float64 {}<br>
-                func currentDistancePage(w http.ResponseWriter, r *http.Request) {}<br>
-                <p><img src="./photo/func2.png" width="30%" height="300px"></p>
-                /* Calculate the round distance between two devices. */
-            </p>
-            <hr>
-            <p>
                 <h2>Struct && global variable</h2>
                 type Duration struct {} // Store the variables for distance calculation<br>
                 type Device struct {} // Store the device information<br>
@@ -74,18 +58,106 @@
             </p>
             <hr>
             <p>
+                <h2>Functions:</h2>
+                func distanceCal_oneway(senT, receiveT int64) (distance float64) {}<br>
+                func onewayDistancePage(w http.ResponseWriter, r *http.Request) {}<br>
+                <p><img src="./photo/func1.png" width="30%" height="350px"></p>
+                /* Calculate the oneway distance from one device to another device. */
+                <h3>API show [GET]</h3>
+                <p>
+                    Using the GET command in postman, and type: http://localhost:10000/currentOnewayDistance.<br>
+                    <p><img src="./photo/post4.png" width="40%" height="300px"></p>
+                </p>
+            </p>
+            <hr>
+            <p>
+                <h2>Functions:</h2>
+                func DistanceCal(time1, time2 int64) float64 {}<br>
+                func currentDistancePage(w http.ResponseWriter, r *http.Request) {}<br>
+                <p><img src="./photo/func2.png" width="30%" height="300px"></p>
+                /* Calculate the round distance between two devices. */
+                <h3>API show [GET]</h3>
+                <p>
+                    Using the GET command in postman, and type: http://localhost:10000/currentDistance.<br>
+                    <p><img src="./photo/post5.png" width="40%" height="300px"></p>
+                </p>
+            </p>
+            <hr>
+            <p>
+                <h2>Functions:</h2>
+                func connection(w http.ResponseWriter, r *http.Request) {}<br>
+                func clearDeviceList(deviceList *list.List) {}<br>
+                func updateDeviceList(nearbyDeviceList *list.List, name string, distance float64) *list.List {}<br>
+                func initializeDL() (deviceList *list.List) {}<br>
+                <p><img src="./photo/func6.png" width="40%" height="350px"></p>
+                <p><img src="./photo/func7.png" width="40%" height="250px"></p>
+                /** <br>
+                 * The function(clearDeviceList): clear the list we used in the function (connection), reset.<br>
+                 * The function(updateDeviceList): add a new element(the Device struct type) to the list, using PushBack.<br>
+                 * The function(initializeDL): Initialize the basic empty deviceList(empty list), use to store new Device struct type element.<br>
+                 * <br>
+                 * The function(connection): The main function for the above three. The purpose for the connection is to achieve that user can search the information<br>
+                 * about other devices, user can just enter the number of devices they want to search, and the name of the devices. Then the function(connection)<br>
+                 * will add these information in the list. and show on the API website. There will be more features for the function(connection) to achieve, and<br>
+                 * will be developed in the future...<br>
+                 */
+                <h3>API show [GET]</h3>
+                <p>
+                    Uing the GET command in postman, and type: http://localhost:10000/connection, then type the information in terminal.<br>
+                    <p><img src="./photo/post1.png" width="40%" height="300px"></p>
+                    <p><img src="./photo/post2.png" width="30%" height="250px"></p>
+                    <p><img src="./photo/post3.png" width="40%" height="350px"></p>
+                </p>
+            </p>
+        </div>
+        <br><hr><br>
+        <div class="handleRequests">
+            <h1>handleRequests && postman test</h1>
+            <p><img src="./photo/handle.png" width="50%" height="300px"></p>
+            <h2>Features:</h2>
+            <ul><p>
+                onewayDistancePage -> /currentOnewayDistance: GET<br>
+                currentDistancePage -> /currentDistance: GET<br> 
+                connection -> /connection: GET<br> 
+                AllDevices -> /devices: GET<br> 
+                homepage -> /: GET<br>
+                getDeviceWithID -> /device/{uuid}: GET<br>
+                addDeviceWithID -> /device: POST<br>
+                deleteDeviceWithID -> /device/{uuid}: DELETE<br>
+                modifyDeviceWithID -> /device/{uuid}/name={newName}/distance={newDistance}: PATCH<br>
+            </p></ul>
+            <br>
+            <p>
                 <h2>Homepage</h2>
                 func homepage(w http.ResponseWriter, r *http.Request) {}<br>
                 <p><img src="./photo/func5.png" width="25%" height="130px"></p>
+                <h3>API show [GET]</h3>
+                Uing the GET command in postman, and type: http://localhost:10000/, get in the main page.<br>
+                <p><img src="./photo/post0.png" width="40%" height="300px"></p>
             </p>
-            <hr>
+            <br>
+            <p>
+                <h2>AllDevices</h2>
+                func AllDevices(w http.ResponseWriter, r *http.Request) {}
+                <p><img src="./photo/func8.png" width="20%" height="100px"></p>
+                /* The function(AllDevices) can use to check the info of all devices. Also can use with DELETE and POST. 
+                Will see the different after we delete a device or add a new device. */
+                <h3>API show [GET]</h3>
+                Uing the GET command in postman, and type: http://localhost:10000/devices, get all the devices info.<br>
+                <p><img src="./photo/post6.png" width="40%" height="300px"></p>
+            </p>
+            <br>
+            <p>
+                <h2>getDeviceWithID</h2>
+                func getDeviceWithID(w http.ResponseWriter, r *http.Request) {}
+                <p><img src="./photo/func9.png" width="30%" height="300px"></p>
+                /* Search only one device info in the database, search by the ID of the corresponding device. */
+                <h3>API show [GET]</h3>
+                Uing the GET command in postman, and type: http://localhost:10000/device/{uuid}, get the certain device information.<br>
+                <p><img src="./photo/post7.png" width="40%" height="300px"></p>
+            </p>
+            <br>
+
         </div>
-            <div class="handleRequests">
-                <h1>handleRequests && postman test</h1>
-                <p><img src="./photo/handle.png" width="50%" height="300px"></p>
-                <p>
-                    
-                </p>
-            </div>
     </body>
 </html>

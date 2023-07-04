@@ -82,7 +82,7 @@ func AllDevices(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: AllDevices")
 }
 
-// INitialize the deviceList
+// Initialize the deviceList
 func initializeDL() (deviceList *list.List) {
 	deviceList = list.New()
 	return deviceList

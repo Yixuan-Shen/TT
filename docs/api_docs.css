@@ -1,7 +1,7 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Times New Roman", serif;
     color: rgb(27, 25, 25);
-    background-color: white;
+    background-color: rgb(243, 236, 236);
     font-size: 18px;
     font-weight: normal; 
 }
@@ -12,7 +12,7 @@ h1 {
 }
 
 header {
-    background-color: rgb(247, 228, 247);
+    background-color: lightblue;
     position: relative;
     width: 94.4%;
     height: 100%;
@@ -44,7 +44,7 @@ button:hover {
 
 /* change the color when the arrow click the button*/
 button:active {
-    background-color: rgb(128, 196, 230);
+    background-color: lightblue;
 }
 
 #introduction h1 {
@@ -71,15 +71,15 @@ button:active {
     font-size: 30px;
 }
 
-#functions p {
-    font-family: "IBM Plex Mono", monospace;
-}
-
 .handleRequests h1 {
-    font-family: "Times New Roman", serif;
+    font-family: "Andale Mono", monospace;
+    font-size: 40px;
+    text-decoration: underline;
 }
 
-.handleRequests {
-    font-size: 25px;
-    text-decoration: underline;
+.handleRequests ul{
+    border-top: 4px black solid;
+    border-right: 4px rgb(236, 138, 138) solid;
+    border-bottom: 4px black solid;
+    border-left: 4px rgb(236, 138, 138) solid;
 }
