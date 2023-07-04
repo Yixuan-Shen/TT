@@ -38,10 +38,10 @@
             <p>[Apache-2.0](LICENSE)</p>
         </div>
         <hr>
-        <div id = "package">
+        <!-- <div id = "package">
             <h1>import package</h1>
             <p><img src="./photo/import.png" width="20%" height="280px"></p>
-        </div>
+        </div> -->
         <hr>
         <div id = "functions">
             <h1>API function</h1>
@@ -53,15 +53,15 @@
                 const BluetoothDisConst = 0.00000029981 / 2 // Simulate the bluetooth distence<br>
                 var initTime int64 // To record the first send time by another device<br>
                 var devices = []Device {} // Set the sample for the basic devices information<br>
-                <p><img src="./photo/func3.png" width="20%" height="100px"></p>
-                <p><img src="./photo/func4.png" width="20%" height="260px"></p>
+                <!-- <p><img src="./photo/func3.png" width="20%" height="100px"></p>
+                <p><img src="./photo/func4.png" width="20%" height="260px"></p> -->
             </p>
             <hr>
             <p>
                 <h2>Functions:</h2>
                 func distanceCal_oneway(senT, receiveT int64) (distance float64) {}<br>
                 func onewayDistancePage(w http.ResponseWriter, r *http.Request) {}<br>
-                <p><img src="./photo/func1.png" width="30%" height="350px"></p>
+                <!-- <p><img src="./photo/func1.png" width="30%" height="350px"></p> -->
                 /* Calculate the oneway distance from one device to another device. */
                 <h3>API show [GET]</h3>
                 <p>
@@ -74,7 +74,7 @@
                 <h2>Functions:</h2>
                 func DistanceCal(time1, time2 int64) float64 {}<br>
                 func currentDistancePage(w http.ResponseWriter, r *http.Request) {}<br>
-                <p><img src="./photo/func2.png" width="30%" height="300px"></p>
+                <!-- <p><img src="./photo/func2.png" width="30%" height="300px"></p> -->
                 /* Calculate the round distance between two devices. */
                 <h3>API show [GET]</h3>
                 <p>
@@ -89,8 +89,8 @@
                 func clearDeviceList(deviceList *list.List) {}<br>
                 func updateDeviceList(nearbyDeviceList *list.List, name string, distance float64) *list.List {}<br>
                 func initializeDL() (deviceList *list.List) {}<br>
-                <p><img src="./photo/func6.png" width="40%" height="350px"></p>
-                <p><img src="./photo/func7.png" width="40%" height="250px"></p>
+                <!-- <p><img src="./photo/func6.png" width="40%" height="350px"></p>
+                <p><img src="./photo/func7.png" width="40%" height="250px"></p> -->
                 /** <br>
                  * The function(clearDeviceList): clear the list we used in the function (connection), reset.<br>
                  * The function(updateDeviceList): add a new element(the Device struct type) to the list, using PushBack.<br>
@@ -113,7 +113,7 @@
         <br><hr><br>
         <div class="handleRequests">
             <h1>handleRequests && postman test</h1>
-            <p><img src="./photo/handle.png" width="50%" height="300px"></p>
+            <!-- <p><img src="./photo/handle.png" width="50%" height="300px"></p> -->
             <h2>Features:</h2>
             <ul><p>
                 onewayDistancePage -> /currentOnewayDistance: GET<br>
@@ -130,7 +130,7 @@
             <p>
                 <h2>Homepage</h2>
                 func homepage(w http.ResponseWriter, r *http.Request) {}<br>
-                <p><img src="./photo/func5.png" width="25%" height="130px"></p>
+                <!-- <p><img src="./photo/func5.png" width="25%" height="130px"></p> -->
                 <h3>API show [GET]</h3>
                 Using the GET command in postman, and type: http://localhost:10000/, get in the main page.<br>
                 <p><img src="./photo/post0.png" width="40%" height="300px"></p>
@@ -139,7 +139,7 @@
             <p>
                 <h2>AllDevices</h2>
                 func AllDevices(w http.ResponseWriter, r *http.Request) {}
-                <p><img src="./photo/func8.png" width="20%" height="100px"></p>
+                <!-- <p><img src="./photo/func8.png" width="20%" height="100px"></p> -->
                 /* The function(AllDevices) can use to check the info of all devices. Also can use with DELETE and POST. 
                 Will see the different after we delete a device or add a new device. */
                 <h3>API show [GET]</h3>
@@ -150,7 +150,7 @@
             <p>
                 <h2>getDeviceWithID</h2>
                 func getDeviceWithID(w http.ResponseWriter, r *http.Request) {}
-                <p><img src="./photo/func9.png" width="30%" height="300px"></p>
+                <!-- <p><img src="./photo/func9.png" width="30%" height="300px"></p> -->
                 /* Search only one device info in the database, search by the ID of the corresponding device. */
                 <h3>API show [GET]</h3>
                 Using the GET command in postman, and type: http://localhost:10000/device/{uuid}, get the certain device information.<br>
@@ -160,7 +160,7 @@
             <p>
                 <h2>addDeviceWithID</h2>
                 func addDeviceWithID(w http.ResponseWriter, r *http.Request) {}
-                <p><img src="./photo/func10.png" width="30%" height="300px"></p>
+                <!-- <p><img src="./photo/func10.png" width="30%" height="300px"></p> -->
                 /* Add a new device information. Can type new id, new name, new distance. */
                 <h3>API show [POST]</h3>
                 Using the GET function http://localhost:10000/devices, get all devices information first.<br>
@@ -175,7 +175,7 @@
             <p>
                 <h2>deleteDeviceWithID</h2>
                 func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {}
-                <p><img src="./photo/func11.png" width="30%" height="300px"></p>
+                <!-- <p><img src="./photo/func11.png" width="30%" height="300px"></p> -->
                 /* Search the id first, if find the id successfully, then delete from the device container. */
                 <h3>API show [POST]</h3>
                 Using the GET function http://localhost:10000/devices, get all devices information first.<br>
