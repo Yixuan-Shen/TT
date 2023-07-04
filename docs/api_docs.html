@@ -31,10 +31,61 @@
                 This program is using the programming languages: golang, C++, html/css.
             </p>
         </div>
+        <hr>
         <div id = "license">
             <h1>License</h1>
             <p>License</p>
             <p>[Apache-2.0](LICENSE)</p>
         </div>
+        <hr>
+        <div id = "package">
+            <h1>import package</h1>
+            <p><img src="./photo/import.png" width="20%" height="280px"></p>
+        </div>
+        <hr>
+        <div id = "functions">
+            <h1>API function</h1>
+            <p>The API for our program is a RESTful API in GO. The following information will show the features that</p>
+            <p>
+                <h2>Functions:</h2>
+                func distanceCal_oneway(senT, receiveT int64) (distance float64) {}<br>
+                func onewayDistancePage(w http.ResponseWriter, r *http.Request) {}<br>
+                <p><img src="./photo/func1.png" width="30%" height="350px"></p>
+                /* Calculate the oneway distance from one device to another device. */
+            </p>
+            <hr>
+            <p>
+                <h2>Functions:</h2>
+                func DistanceCal(time1, time2 int64) float64 {}<br>
+                func currentDistancePage(w http.ResponseWriter, r *http.Request) {}<br>
+                <p><img src="./photo/func2.png" width="30%" height="300px"></p>
+                /* Calculate the round distance between two devices. */
+            </p>
+            <hr>
+            <p>
+                <h2>Struct && global variable</h2>
+                type Duration struct {} // Store the variables for distance calculation<br>
+                type Device struct {} // Store the device information<br>
+                const BluetoothDisConst = 0.00000029981 / 2 // Simulate the bluetooth distence<br>
+                var initTime int64 // To record the first send time by another device<br>
+                var devices = []Device {} // Set the sample for the basic devices information<br>
+                <p><img src="./photo/func3.png" width="20%" height="100px"></p>
+                <p><img src="./photo/func4.png" width="20%" height="260px"></p>
+            </p>
+            <hr>
+            <p>
+                <h2>Homepage</h2>
+                func homepage(w http.ResponseWriter, r *http.Request) {}<br>
+                <p><img src="./photo/func5.png" width="25%" height="130px"></p>
+            </p>
+            <hr>
+        </div>
+            <div class="handleRequests">
+                <h1>handleRequests && postman test</h1>
+                <p><img src="./photo/handle.png" width="50%" height="300px"></p>
+                <p>
+                    
+                </p>
+            </div>
     </body>
 </html>

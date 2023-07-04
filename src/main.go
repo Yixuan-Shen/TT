@@ -125,19 +125,6 @@ func connection(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: connection")
 }
 
-// access the homepage
-func homepage(w http.ResponseWriter, r *http.Request) {
-	initTime = time.Now().UnixNano()
-	// fmt.Fprintf(w, "Welcome to the homepage of TT. X_x\n")
-	// fmt.Fprintf(w, "(Init Time reset!)\n")
-	// fmt.Fprintf(w, "There are several features that we can use on this API:\n")
-	// fmt.Fprintf(w, "+---------------------------------------+\n")
-	// fmt.Fprintf(w, "/currentDistance -> round distance\n/devices -> devices info\n/currentOnewayDistance -> one way distance\n")
-	// fmt.Fprintf(w, "+---------------------------------------+\n")
-	// fmt.Fprintf(w, "\n\n\n\n\n\n\n\n\n\n\nFounder: Yixuan Shen, HanZhen Qin, Kaiyang Chang\n")
-	fmt.Println("Endpoint Hit: homepage")
-}
-
 // The function "GET"
 func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -222,6 +209,14 @@ func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	}
 	devices = append(devices, newDevice)
 	fmt.Fprintf(w, " Device ID: %s, info changed", newDevice.ID)
+}
+
+// access the homepage
+func homepage(w http.ResponseWriter, r *http.Request) {
+	initTime = time.Now().UnixNano()
+	fmt.Fprintf(w, "Welcome to the homepage of EdgeX-TT. X_x\n")
+	fmt.Fprintf(w, "(Init Time reset!)\n")
+	fmt.Println("Endpoint Hit: homepage")
 }
 
 // Handle the function link to the website

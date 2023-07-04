@@ -1,4 +1,4 @@
-body{
+body {
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(27, 25, 25);
     background-color: white;
@@ -6,12 +6,12 @@ body{
     font-weight: normal; 
 }
 
-h1{
+h1 {
     font-size: 1.5em;
     margin: 0;
 }
 
-header{
+header {
     background-color: rgb(247, 228, 247);
     position: relative;
     width: 94.4%;
@@ -19,39 +19,67 @@ header{
     padding: 40px;
 }
 
-nav li{
+nav li {
     display: inline-table;
     font-size: 60px;
     padding: 10px;
 }
 
-nav{
+nav {
     position: absolute;
     top:30px;
     right:130px;
 }
 
-button{
+button {
     padding: 7px 15px;
     color: white;
     background-color: black;
 }
 
 /* change the color when the mouse arrow attch the button */
-button:hover{
+button:hover {
     background-color: pink;
 }
 
 /* change the color when the arrow click the button*/
-button:active{
+button:active {
     background-color: rgb(128, 196, 230);
 }
 
-#introduction h1{
+#introduction h1 {
     font-family: "Andale Mono", monospace;
     font-size: 30px;
 }
 
-.social-icon{
-	color: mediumpurple;
+.social-icon {
+	color: rgb(41, 166, 228);
+}
+
+#package h1 {
+    font-family: "Andale Mono", monospace;
+    font-size: 30px;
+}
+
+#license h1 {
+    font-family: "Andale Mono", monospace;
+    font-size: 30px;
+}
+
+#functions h1 {
+    font-family: "Andale Mono", monospace;
+    font-size: 30px;
+}
+
+#functions p {
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.handleRequests h1 {
+    font-family: "Times New Roman", serif;
+}
+
+.handleRequests {
+    font-size: 25px;
+    text-decoration: underline;
 }
