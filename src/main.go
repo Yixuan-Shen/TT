@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"time"
 
+	"strconv"
+
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
@@ -187,28 +189,31 @@ func addDeviceWithID(w http.ResponseWriter, r *http.Request) {
 // The function "PATCH"
 func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: modifyDeviceWithID")
-	requestBody, _ := ioutil.ReadAll(r.Body)
-	var newDevice Device
-	json.Unmarshal(requestBody, &newDevice)
-	for _, device := range devices {
-		if device.ID == newDevice.ID {
-			if device.Name == "" {
-				fmt.Fprintf(w, " New name cannot be empty, plase re-enter a new one\n")
-			} else if device.Name == newDevice.Name {
-				fmt.Fprintf(w, " New name cannot be the same as before\n")
-			} else {
-				fmt.Fprintf(w, " Device name update successfully\n")
-			}
-			if device.Distance_m == newDevice.Distance_m {
-				fmt.Fprintf(w, " New distance cannot be the same as before\n")
-			} else {
-				fmt.Fprintf(w, " Device distance update successfully\n")
-			}
+	vars := mux.Vars(r)
+	uuidStr := vars["uuid"]
+	nameStr := vars["newName"]
+	// new name cannot be empty
+	if nameStr == " " {
+		fmt.Fprintf(w, "404 not found")
+		return
+	}
+	// new distance cannot be empty
+	setDistance := vars["newDistance"]
+	if setDistance == " " {
+		fmt.Fprintf(w, "404 not found")
+		return
+	}
+	UUID, _ := uuid.Parse(uuidStr)
+	for index, device := range devices {
+		if device.ID == UUID {
+			devices[index].Name = nameStr
+			devices[index].Distance_m, _ = strconv.ParseFloat(setDistance, 64) //switch string to float64
+			fmt.Fprintf(w, "device found with UUID: "+uuidStr+" information updated.\n")
+			fmt.Fprintf(w, "200 OK")
 			return
 		}
 	}
-	devices = append(devices, newDevice)
-	fmt.Fprintf(w, " Device ID: %s, info changed", newDevice.ID)
+	fmt.Fprintf(w, "No device found, 404 not found")
 }
 
 // access the homepage
@@ -229,7 +234,7 @@ func handleRequests() {
 	myRouter.HandleFunc("/device", addDeviceWithID).Methods("POST")
 	myRouter.HandleFunc("/device/{uuid}", getDeviceWithID).Methods("GET")
 	myRouter.HandleFunc("/device/{uuid}", deleteDeviceWithID).Methods("DELETE")
-	myRouter.HandleFunc("/device/{uuid}/name={newName}/distance={newDistance}", modifyDeviceWithID).Methods("PATCH")
+	myRouter.HandleFunc("/device/{uuid}/{newName}/{newDistance}", modifyDeviceWithID).Methods("PATCH")
 
 	myRouter.HandleFunc("/currentOnewayDistance", onewayDistancePage)
 	myRouter.HandleFunc("/connection", connection)
