@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <title>API docs for EdgeX-TT: version 0.1</title>
+        <title>API docs for EdgeX-TT: version 0.2</title>
         <!-- import links to use -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
@@ -13,7 +13,7 @@
         <!-- link to a css file -->
     </head>
     <header>
-        <h1>API docs for EdgeX-TT: version 0.1</h1>
+        <h1>API docs for EdgeX-TT: version 0.2</h1>
         <p>Founder: Hanzhen Qin, Yixuan Shen, Kaiyang Chang</p>
         <nav>
             <ul>
@@ -113,7 +113,7 @@
         <br><hr><br>
         <div class="handleRequests">
             <h1>handleRequests && postman test</h1>
-            <p><img src="./photo/handle.png" width="50%" height="300px"></p>
+            <!-- <p><img src="./photo/handle.png" width="50%" height="300px"></p> -->
             <h2>Features:</h2>
             <ul><p>
                 onewayDistancePage -> /currentOnewayDistance: GET<br>
@@ -124,7 +124,7 @@
                 getDeviceWithID -> /device/{uuid}: GET<br>
                 addDeviceWithID -> /device: POST<br>
                 deleteDeviceWithID -> /device/{uuid}: DELETE<br>
-                modifyDeviceWithID -> /device/{uuid}/name={newName}/distance={newDistance}: PATCH<br>
+                modifyDeviceWithID -> /device/{uuid}/{newName}/{newDistance}: PATCH<br>
             </p></ul>
             <br>
             <p>
@@ -140,8 +140,12 @@
                 <h2>AllDevices</h2>
                 func AllDevices(w http.ResponseWriter, r *http.Request) {}<br>
                 <!-- <p><img src="./photo/func8.png" width="20%" height="100px"></p> -->
-                /* The function(AllDevices) can use to check the info of all devices. Also can use with DELETE and POST. 
-                Will see the different after we delete a device or add a new device. */
+                /** The function(AllDevices) can use to check the info of all devices. Also can use with DELETE and POST.<br>
+                * Will see the different after we delete a device or add a new device.<br>
+                * <br>
+                * Successful<br>
+                * RETURN (http code: 200 OK) : get devices information
+                */
                 <h3>API show [GET]</h3>
                 Using the GET command in postman, and type: http://localhost:10000/devices, get all the devices info.<br>
                 <p><img src="./photo/post6.png" width="40%" height="300px"></p>
@@ -151,7 +155,14 @@
                 <h2>getDeviceWithID</h2>
                 func getDeviceWithID(w http.ResponseWriter, r *http.Request) {}<br>
                 <!-- <p><img src="./photo/func9.png" width="30%" height="300px"></p> -->
-                /* Search only one device info in the database, search by the ID of the corresponding device. */
+                /** Search only one device info in the database, search by the ID of the corresponding device.<br>
+                * <br>
+                * Successful<br>
+                * RETURN (http code: 200 OK) : device found with UUID<br>
+                * <br>
+                * ERROR<br>
+                * RETURN (http code: 405 Method Not Allowed) : No device found<br>
+                */
                 <h3>API show [GET]</h3>
                 Using the GET command in postman, and type: http://localhost:10000/device/{uuid}, get the certain device information.<br>
                 <p><img src="./photo/post7.png" width="40%" height="300px"></p>
@@ -161,7 +172,14 @@
                 <h2>addDeviceWithID</h2>
                 func addDeviceWithID(w http.ResponseWriter, r *http.Request) {}<br>
                 <!-- <p><img src="./photo/func10.png" width="30%" height="300px"></p> -->
-                /* Add a new device information. Can type new id, new name, new distance. */
+                /** Add a new device information. Can type new id, new name, new distance.<br>
+                * <br>
+                * Successful<br>
+                * RETRUN (http code: 200 OK) : Device added<br>
+                * <br>
+                * ERROR<br>
+                * RETURN (http code: 405 Method Not Allowed) : Device already exists<br>
+                */
                 <h3>API show [POST]</h3>
                 Using the GET function http://localhost:10000/devices, get all devices information first.<br>
                 <p><img src="./photo/post8.png" width="40%" height="300px"></p>
@@ -176,7 +194,14 @@
                 <h2>deleteDeviceWithID</h2>
                 func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {}<br>
                 <!-- <p><img src="./photo/func11.png" width="30%" height="300px"></p> -->
-                /* Search the id first, if find the id successfully, then delete from the device container. */
+                /** Search the id first, if find the id successfully, then delete from the device container.<br>
+                * <br>
+                * Successful<br>
+                * RETURN (http code: 200 OK) : Device deleted<br>
+                * <br>
+                * ERROR<br>
+                * RETURN (http code: 405 Method Not Allowed) : No device found<br>
+                */
                 <h3>API show [POST]</h3>
                 Using the GET function http://localhost:10000/devices, get all devices information first.<br>
                 <p><img src="./photo/post10.png" width="40%" height="300px"></p>
@@ -192,13 +217,13 @@
                 /** Search the id first, then enter the new name or new distance to set.<br>
                 * If find the id successfully, then update the information for the corresponding device.<br>
                 * <br>
-                * RETURN<br>
-                * 200 OK<br>
+                * Successful<br>
+                * RETURN (http code: 200 OK) : device found with UUID information updated. 200 OK.<br>
                 * <br>
                 * ERROR<br>
-                * If new name is empty -> 404 not found<br>
-                * If new distance is empty -> 404 not found<br>
-                * If the id is incorrect -> No device found, 404 not found<br>
+                * RETURN (http code: 405 Method Not Allowed) : If new name is empty<br>
+                * RETURN (http code: 405 Method Not Allowed) : If new distance is empty<br>
+                * RETURN (http code: 404 Not Found) : No device found, If the id is incorrect<br>
                 */
                 <h3>API show [PATCH]</h3>
                 Using the GET function http://localhost:10000/devices, get all devices information first.<br>

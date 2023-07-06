@@ -81,6 +81,7 @@ func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 // Show all the devices on the API
 func AllDevices(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(devices)
+	fmt.Fprintf(w, "200 OK")
 	fmt.Println("Endpoint Hit: AllDevices")
 }
 
@@ -139,13 +140,12 @@ func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	for _, device := range devices {
 		if device.ID == UUID {
 			json.NewEncoder(w).Encode(device)
-			fmt.Println("device found with UUID: " + uuidStr)
+			fmt.Println("device found with UUID: " + uuidStr + " 200 OK")
 			return
 		}
 	}
-
-	fmt.Println(" No device found")
-	fmt.Fprintf(w, " No device found")
+	fmt.Fprintf(w, "No device found, 405 Method Not Allowed")
+	fmt.Println("No device found")
 }
 
 // The function "DELETE"
@@ -160,12 +160,12 @@ func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	for index, device := range devices {
 		if device.ID == UUID {
 			devices = append(devices[:index], devices[index+1:]...)
-			fmt.Fprintf(w, " Device deleted")
+			fmt.Fprintf(w, "Device deleted, 200 OK")
 			return
 		}
 	}
-
-	fmt.Fprintf(w, " No device found")
+	fmt.Fprintf(w, "No device found, 405 Method Not Allowed")
+	fmt.Printf("No device found, 405 Method Not Allowed")
 }
 
 // The function "POST"
@@ -177,13 +177,14 @@ func addDeviceWithID(w http.ResponseWriter, r *http.Request) {
 
 	for _, d := range devices {
 		if d.ID == device.ID {
-			fmt.Fprintf(w, "Device already exists")
+			fmt.Fprintf(w, "Device already exists, 405 Method Not Allowed")
 			return
 		}
 	}
 
 	devices = append(devices, device)
-	fmt.Fprintf(w, "Device added")
+	fmt.Fprintf(w, "Device added, 200 OK")
+	fmt.Printf("Device added, 200 OK")
 }
 
 // The function "PATCH"
@@ -194,13 +195,13 @@ func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	nameStr := vars["newName"]
 	// new name cannot be empty
 	if nameStr == " " {
-		fmt.Fprintf(w, "404 not found")
+		fmt.Fprintf(w, "405 Method Not Allowed")
 		return
 	}
 	// new distance cannot be empty
 	setDistance := vars["newDistance"]
 	if setDistance == " " {
-		fmt.Fprintf(w, "404 not found")
+		fmt.Fprintf(w, "405 Method Not Allowed")
 		return
 	}
 	UUID, _ := uuid.Parse(uuidStr)
@@ -208,12 +209,13 @@ func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
 		if device.ID == UUID {
 			devices[index].Name = nameStr
 			devices[index].Distance_m, _ = strconv.ParseFloat(setDistance, 64) //switch string to float64
-			fmt.Fprintf(w, "device found with UUID: "+uuidStr+" information updated.\n")
+			fmt.Fprintf(w, "device found with UUID: "+uuidStr+" information updated\n")
 			fmt.Fprintf(w, "200 OK")
 			return
 		}
 	}
-	fmt.Fprintf(w, "No device found, 404 not found")
+	fmt.Fprintf(w, "No device found, 404 Not Found")
+	fmt.Printf("No device found, 404 Not Found")
 }
 
 // access the homepage
