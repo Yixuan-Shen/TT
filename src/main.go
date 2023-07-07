@@ -20,6 +20,11 @@ type Duration struct {
 	Distance     float64
 }
 
+type Error struct {
+	// Error message
+	ErrorMessage string
+}
+
 type Device struct {
 	// Device ID
 	ID uuid.UUID
@@ -142,8 +147,9 @@ func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println(" No device found")
-	fmt.Fprintf(w, " No device found")
+	fmt.Println("device not found")
+	ErrorMsg := Error{"device not found"}
+	json.NewEncoder(w).Encode(ErrorMsg)
 }
 
 // The function "DELETE"
@@ -214,8 +220,8 @@ func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
 // access the homepage
 func homepage(w http.ResponseWriter, r *http.Request) {
 	initTime = time.Now().UnixNano()
-	fmt.Fprintf(w, "Welcome to the homepage of EdgeX-TT. X_x\n")
-	fmt.Fprintf(w, "(Init Time reset!)\n")
+	// fmt.Fprintf(w, "Welcome to the homepage of EdgeX-TT. X_x\n")
+	// fmt.Fprintf(w, "(Init Time reset!)\n")
 	fmt.Println("Endpoint Hit: homepage")
 }
 
