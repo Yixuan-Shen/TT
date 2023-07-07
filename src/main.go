@@ -83,6 +83,7 @@ func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 
 // Show all the devices on the API
 func AllDevices(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(devices)
 	fmt.Println("Endpoint Hit: AllDevices")
 }
@@ -136,11 +137,14 @@ func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	uuidStr := vars["uuid"]
 	UUID, _ := uuid.Parse(uuidStr)
 
+	w.Header().Add("Content-Type", "application/json")
+
 	fmt.Println("UUID: " + uuidStr)
 	fmt.Println("Endpoint Hit: getDeviceWithID")
 
 	for _, device := range devices {
 		if device.ID == UUID {
+			w.WriteHeader(200)
 			json.NewEncoder(w).Encode(device)
 			fmt.Println("device found with UUID: " + uuidStr)
 			return
@@ -149,6 +153,7 @@ func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("device not found")
 	ErrorMsg := Error{"device not found"}
+	w.WriteHeader(404)
 	json.NewEncoder(w).Encode(ErrorMsg)
 }
 
@@ -164,11 +169,13 @@ func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	for index, device := range devices {
 		if device.ID == UUID {
 			devices = append(devices[:index], devices[index+1:]...)
+			w.WriteHeader(200)
 			fmt.Fprintf(w, " Device deleted")
 			return
 		}
 	}
 
+	w.WriteHeader(404)
 	fmt.Fprintf(w, " No device found")
 }
 
