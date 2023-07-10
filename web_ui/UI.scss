@@ -1,0 +1,529 @@
+* {
+  font-family: "Lato", sans-serif;
+}
+body {
+  height: 90vh;
+  display: flex;
+  background: aliceblue;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+ul {
+  list-style: none;
+}
+// variables
+$yellow: #feb103;
+$gray: #f6f8fa;
+$black: #444;
+$text-gray: #9e9e9e;
+$text-gray2: #858d9f;
+$blue1: #3976f6;
+$blue2: #59a2fb;
+$switchOff: #ff574e;
+// helper class
+.f {
+  display: flex;
+}
+.fe {
+  align-items: flex-end;
+}
+// start
+body {
+  background-color: rgba(89, 162, 251, 0.61);
+}
+.dashboard {
+  background-color: $gray;
+  width: 420px;
+  border-radius: 0 0 20px -15px black;
+  margin: auto;
+}
+header {
+  background-color: white;
+  overflow: hidden;
+  border-radius: 0 0 50px 50px;
+  padding: 40px 40px 20px;
+  box-shadow: 0 -5px 27px 0 rgba(128, 128, 128, 0.15);
+}
+.weather {
+  margin-top: 40px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  sup {
+    font-size: 11px;
+    position: relative;
+    top: -11px;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 60px;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    right: 0;
+    bottom: 14px;
+  }
+  > div {
+    white-space: nowrap;
+  }
+  > div + div {
+    margin-left: 30px;
+  }
+  > div > strong {
+    font-size: 20px;
+  }
+  > div > p {
+    color: $text-gray;
+    margin-top: 10px;
+  }
+}
+.category {
+  overflow: hidden;
+  margin-top: 30px;
+  ul {
+    display: flex;
+  }
+  li + li {
+    margin-left: 40px;
+  }
+  a {
+    font-size: 17px;
+    font-weight: 600;
+    color: $text-gray2;
+    white-space: nowrap;
+    &:hover,
+    &.active {
+      color: $black;
+    }
+    &.active {
+      position: relative;
+      &::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 6px;
+        background-color: $black;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        bottom: -15px;
+      }
+    }
+  }
+}
+.appliances {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 340px;
+  margin: 30px auto;
+}
+.appliance {
+  position: relative;
+  height: 170px;
+  width: 45%;
+  margin: 10px 0;
+  span {
+    position: relative;
+    &::before,
+    &::after {
+      text-transform: uppercase;
+      font-size: 12px;
+      position: absolute;
+      left: 0;
+    }
+    &::before {
+      content: attr(data-o);
+      opacity: 0;
+    }
+    &::after {
+      content: attr(data-c);
+    }
+  }
+  strong {
+    margin: 70px 0 10px;
+    display: block;
+    font-size: 18px;
+  }
+  label {
+    position: absolute;
+    width: 74%;
+    height: 71%;
+    cursor: pointer;
+    padding: 20px;
+    box-shadow: 1px 0 10px 10px rgba(black, 0.03);
+    border-radius: 30px;
+    &::before {
+      border-radius: 30px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background-color: white;
+      content: "";
+    }
+    * {
+      position: relative;
+      transition: 200ms;
+    }
+    small {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: $switchOff;
+      border-radius: 10px;
+      top: 30px;
+      right: 20px;
+      transition: 200ms;
+      &::after,
+      &::before {
+        content: "";
+      }
+    }
+    .f {
+      width: 16px;
+      height: 22px;
+      background-color: $blue1;
+      display: block;
+      position: absolute;
+      border-radius: 2px;
+      top: 30px;
+      background-image: linear-gradient(0deg, white 2px, transparent 2px),
+        linear-gradient(0deg, white 12px, transparent 0);
+      background-size: 17px 9px, 2px 15px;
+      background-position: 0 0, 3px 0;
+      background-repeat: no-repeat;
+    }
+    .a {
+      width: 23px;
+      height: 10px;
+      background-color: $blue1;
+      display: block;
+      position: absolute;
+      border-radius: 2px;
+      top: 30px;
+      background-image: linear-gradient(0deg, white 2px, transparent 2px);
+      background-size: 17px 9px;
+      background-position: 3px -2px;
+      background-repeat: no-repeat;
+      &::after,
+      &::before {
+        content: "";
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-width: 3px;
+        border-style: solid;
+        border-color: transparent transparent $blue1;
+        top: 10px;
+        border-radius: 50%;
+        transform: rotate(72deg);
+        display: block;
+      }
+      &::after {
+        left: 14px;
+      }
+      &::before {
+        left: 6px;
+      }
+    }
+    .r {
+      width: 23px;
+      height: 9px;
+      background-color: $blue1;
+      display: block;
+      position: absolute;
+      border-radius: 3px;
+      top: 30px;
+      &::after,
+      &::before {
+        content: "";
+        border-width: 2px;
+        border-style: solid;
+        border-color: rgba($blue1, 0.61) transparent transparent;
+        border-radius: 50%;
+        position: absolute;
+        display: block;
+      }
+      &::after {
+        width: 22px;
+        height: 20px;
+        top: -11px;
+        left: -2px;
+      }
+      &::before {
+        width: 16px;
+        height: 20px;
+        top: -6px;
+        left: 1px;
+      }
+    }
+    .l {
+      width: 22px;
+      height: 13px;
+      background-color: $blue1;
+      display: block;
+      position: absolute;
+      border-radius: 22px 22px 0 0;
+      top: 30px;
+      &::before {
+        content: "";
+        width: 3px;
+        height: 8px;
+        background-color: rgba($blue1, 0.61);
+        display: block;
+        top: -8px;
+        position: absolute;
+        border-radius: 3px;
+        left: 9px;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 4px;
+        background: rgba($blue1, 0.61);
+        border-radius: 0 0 9px 9px;
+        top: 14px;
+        left: 6px;
+      }
+    }
+  }
+  input {
+    display: none;
+    &:checked + label {
+      &::before {
+        content: "";
+        background: linear-gradient(to bottom, $blue2 0%, $blue1 100%);
+      }
+      * {
+        color: white;
+      }
+      i {
+        background-color: rgba(white, 1);
+        &::before,
+        &::after {
+          background-color: rgba(white, 0.61);
+        }
+        &.f {
+          background-image: linear-gradient(
+              0deg,
+              rgba($blue2, 0.61) 2px,
+              transparent 2px
+            ),
+            linear-gradient(0deg, rgba($blue2, 0.61) 12px, transparent 0);
+        }
+        &.a {
+          background-image: linear-gradient(
+            0deg,
+            rgba($blue2, 0.61) 2px,
+            transparent 2px
+          );
+          &::before,
+          &::after {
+            background-color: rgba(white, 0);
+            border-color: transparent transparent rgba(white, 0.61);
+          }
+        }
+        &.r {
+          background-color: rgba(white, 1);
+          &::before,
+          &::after {
+            background-color: rgba(white, 0);
+            border-color: rgba(white, 0.61) transparent transparent;
+          }
+        }
+      }
+      small {
+        width: 30px;
+        height: 15px;
+        background-color: $blue1;
+        &::before {
+          width: 13px;
+          height: 13px;
+          background-color: white;
+          display: block;
+          border-radius: 13px;
+          top: 1px;
+          position: absolute;
+        }
+      }
+      span::before {
+        opacity: 1;
+      }
+      span::after {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.heading .title {
+  margin: 0;
+  font-size: 36px;
+}
+.heading .date {
+  margin: 10px 0;
+  font-size: 16px;
+}
+.icon-w {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: $yellow;
+  margin-right: 30px;
+  top: -7px;
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+  }
+  &::after {
+    width: 28px;
+    height: 13px;
+    border-radius: 20px;
+    background-color: $yellow;
+    bottom: 0;
+    left: 3px;
+  }
+  &::before {
+    width: 20px;
+    height: 20px;
+    box-shadow: 10px -3px 0 -2px rgba($yellow, 0.59),
+      3px -15px 1px -7px rgba($yellow, 0.4),
+      11px -17px 1px -7px rgba($yellow, 0.4),
+      19px -13px 1px -7px rgba($yellow, 0.4),
+      22px -4px 1px -7px rgba($yellow, 0.4);
+    border-radius: 50%;
+  }
+}
+.m-player {
+  position: relative;
+  width: 100%;
+  > h2 {
+    margin-bottom: 5px;
+    margin-top: 10px;
+  }
+  .player {
+    border-radius: 10px;
+    padding: 15px;
+    background-image: linear-gradient(to right, $blue2 0%, $blue1 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.24);
+  }
+  .artist {
+    margin-right: auto;
+    margin-left: 15px;
+    p {
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+  .disc {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-image: linear-gradient(
+        50deg,
+        rgba(255, 255, 255, 0) 45%,
+        rgba(255, 255, 255, 0.15) 31%,
+        rgba(255, 255, 255, 0) 72%
+      ),
+      linear-gradient(
+        -50deg,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0) 60%
+      ),
+      repeating-radial-gradient(circle, #444 0, #444 2px, gray 2px, #545454 3px);
+    position: relative;
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      border-radius: 50%;
+    }
+    &::before {
+      width: 20px;
+      height: 20px;
+      background: black;
+      border: 2px solid #5d5d5d;
+    }
+    &::after {
+      width: 8px;
+      height: 8px;
+      background: white;
+    }
+  }
+  .control {
+    width: 52px;
+    height: 10px;
+    background-image: linear-gradient(
+        to right,
+        rgba(white, 0.61) 2px,
+        transparent 2px
+      ),
+      linear-gradient(to right, rgba(white, 0.61) 2px, transparent 2px),
+      linear-gradient(to right, white 4px, transparent 0),
+      linear-gradient(to right, white 4px, transparent 0);
+    background-position: 0 0, 47px 0, 20px 0, 26px 0;
+    background-size: 2px 12px, 2px 12px, 4px 12px, 4px 12px;
+    background-repeat: no-repeat;
+    position: relative;
+    cursor: pointer;
+    transition: 200ms;
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      border-width: 6px;
+      border-style: solid;
+      top: -1px;
+    }
+    &::before {
+      left: -2px;
+      border-color: transparent rgba(white, 0.61) transparent transparent;
+    }
+    &::after {
+      right: 1px;
+      border-color: transparent transparent transparent rgba(white, 0.61);
+    }
+  }
+  .controls {
+    input {
+      display: none;
+      &:checked + label {
+        .control {
+          background-size: 2px 12px, 2px 12px, 0 0, 0 0;
+          background-position: 6px 0, 40px 0, 20px 0, 26px 0;
+          &::after {
+            right: 18px;
+          }
+          &::before {
+            left: -2px;
+            border-width: 0;
+          }
+        }
+      }
+    }
+  }
+}
