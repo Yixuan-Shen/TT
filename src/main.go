@@ -80,7 +80,7 @@ func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 	newDuration := Duration{initTime, currentTime, dis}
 	json.NewEncoder(w).Encode(newDuration)
 	// fmt.Fprintf(w, "Current Distance: %f\n", dis)
-	fmt.Println("Endpoint Hit: currentDistancePage")
+	fmt.Println("Endpoint Hit: currentDistancePage\n")
 }
 
 // Show all the devices on the API
