@@ -20,4 +20,4 @@ COPY . .
 
 # RUN ${MAKE}
 
-CMD [ "go", "run", "bluetooth_scanner.go" ]
+CMD [ "go", "run", "src/main.go" ]

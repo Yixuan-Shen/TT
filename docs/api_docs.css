@@ -1,0 +1,85 @@
+body {
+    font-family: "Times New Roman", serif;
+    color: rgb(27, 25, 25);
+    background-color: floralwhite;
+    font-size: 18px;
+    font-weight: normal; 
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+header {
+    background-color: lightblue;
+    position: relative;
+    width: 94.4%;
+    height: 100%;
+    padding: 40px;
+}
+
+nav li {
+    display: inline-table;
+    font-size: 60px;
+    padding: 10px;
+}
+
+nav {
+    position: absolute;
+    top:30px;
+    right:130px;
+}
+
+button {
+    padding: 10px 30px;
+    color: white;
+    background-color: black;
+}
+
+/* change the color when the mouse arrow attch the button */
+button:hover {
+    background-color: pink;
+}
+
+/* change the color when the arrow click the button*/
+button:active {
+    background-color: lightblue;
+}
+
+#introduction h1 {
+    font-family: "Andale Mono", monospace;
+    font-size: 30px;
+}
+
+.social-icon {
+	color: rgb(41, 166, 228);
+}
+
+#package h1 {
+    font-family: "Andale Mono", monospace;
+    font-size: 30px;
+}
+
+#license h1 {
+    font-family: "Andale Mono", monospace;
+    font-size: 30px;
+}
+
+#functions h1 {
+    font-family: "Andale Mono", monospace;
+    font-size: 30px;
+}
+
+.handleRequests h1 {
+    font-family: "Andale Mono", monospace;
+    font-size: 40px;
+    text-decoration: underline;
+}
+
+.handleRequests ul{
+    border-top: 4px black solid;
+    border-right: 4px rgb(236, 138, 138) solid;
+    border-bottom: 4px black solid;
+    border-left: 4px rgb(236, 138, 138) solid;
+}
