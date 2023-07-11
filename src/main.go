@@ -22,6 +22,11 @@ type Duration struct {
 	Distance     float64
 }
 
+type Error struct {
+	// Error message
+	ErrorMessage string
+}
+
 type Device struct {
 	// Device ID
 	ID uuid.UUID
@@ -80,6 +85,7 @@ func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 
 // Show all the devices on the API
 func AllDevices(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(devices)
 	fmt.Fprintf(w, "200 OK")
 	fmt.Println("Endpoint Hit: AllDevices")
@@ -134,18 +140,24 @@ func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	uuidStr := vars["uuid"]
 	UUID, _ := uuid.Parse(uuidStr)
 
+	w.Header().Add("Content-Type", "application/json")
+
 	fmt.Println("UUID: " + uuidStr)
 	fmt.Println("Endpoint Hit: getDeviceWithID")
 
 	for _, device := range devices {
 		if device.ID == UUID {
+			w.WriteHeader(200)
 			json.NewEncoder(w).Encode(device)
 			fmt.Println("device found with UUID: " + uuidStr + " 200 OK")
 			return
 		}
 	}
-	fmt.Fprintf(w, "No device found, 405 Method Not Allowed")
-	fmt.Println("No device found")
+
+	fmt.Println("device not found")
+	ErrorMsg := Error{"device not found"}
+	w.WriteHeader(404)
+	json.NewEncoder(w).Encode(ErrorMsg)
 }
 
 // The function "DELETE"
@@ -160,12 +172,14 @@ func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	for index, device := range devices {
 		if device.ID == UUID {
 			devices = append(devices[:index], devices[index+1:]...)
-			fmt.Fprintf(w, "Device deleted, 200 OK")
+			w.WriteHeader(200)
+			fmt.Fprintf(w, " Device deleted")
 			return
 		}
 	}
-	fmt.Fprintf(w, "No device found, 405 Method Not Allowed")
-	fmt.Printf("No device found, 405 Method Not Allowed")
+
+	w.WriteHeader(404)
+	fmt.Fprintf(w, " No device found")
 }
 
 // The function "POST"
@@ -221,8 +235,8 @@ func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
 // access the homepage
 func homepage(w http.ResponseWriter, r *http.Request) {
 	initTime = time.Now().UnixNano()
-	fmt.Fprintf(w, "Welcome to the homepage of EdgeX-TT. X_x\n")
-	fmt.Fprintf(w, "(Init Time reset!)\n")
+	// fmt.Fprintf(w, "Welcome to the homepage of EdgeX-TT. X_x\n")
+	// fmt.Fprintf(w, "(Init Time reset!)\n")
 	fmt.Println("Endpoint Hit: homepage")
 }
 
