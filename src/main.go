@@ -55,14 +55,14 @@ func distanceCal_oneway(sendT, receiveT int64) (distance float64) {
 // One way distacne runner function
 func onewayDistancePage(w http.ResponseWriter, r *http.Request) {
 	sendTime := time.Now().UnixNano()
-	fmt.Println("The time sent by another device is ->", sendTime)
+	fmt.Println("The time sent by another device is ->", sendTime, "\n")
 	receiveTime := time.Now().UnixNano()
-	fmt.Println("The time received by our device is ->", receiveTime)
+	fmt.Println("The time received by our device is ->", receiveTime, "\n")
 	distance := distanceCal_oneway(sendTime, receiveTime)
 	newDuration := Duration{sendTime, receiveTime, distance}
 	json.NewEncoder(w).Encode(newDuration)
-	fmt.Println("The distance between two devices is ->", distance)
-	fmt.Println("Endpoint Hit: current_onewayDistancePage")
+	fmt.Println("The distance between two devices is ->", distance, "\n")
+	fmt.Println("Endpoint Hit: current_onewayDistancePage\n")
 }
 
 // Calculate for the round distance between two devices
@@ -87,8 +87,8 @@ func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 func AllDevices(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(devices)
-	fmt.Fprintf(w, "200 OK")
-	fmt.Println("Endpoint Hit: AllDevices")
+	w.WriteHeader(200)
+	fmt.Println("Endpoint Hit: AllDevices\n")
 }
 
 // Initialize the deviceList
@@ -123,7 +123,7 @@ func connection(w http.ResponseWriter, r *http.Request) {
 		currentTime := time.Now().UnixNano()
 		updateDeviceList(nearbyDeviceList, searchD, DistanceCal(initTime, currentTime))
 	}
-	fmt.Fprintf(w, "Scanning the nearby Devices...\n...\n")
+	fmt.Fprintf(w, "Scanning the nearby Devices......\n")
 	fmt.Fprintf(w, "Device been find as following:\n")
 	//json.NewEncoder(w).Encode(nearbyDeviceList)
 	//print the element in the list to the API website
@@ -131,7 +131,7 @@ func connection(w http.ResponseWriter, r *http.Request) {
 		value := element.Value.(Device)
 		fmt.Fprintf(w, "ID: %s, Name: %s, Distance: %fm\n", value.ID, value.Name, value.Distance_m)
 	}
-	fmt.Println("Endpoint Hit: connection")
+	fmt.Println("Endpoint Hit: connection\n")
 }
 
 // The function "GET"
@@ -143,21 +143,20 @@ func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 
 	fmt.Println("UUID: " + uuidStr)
-	fmt.Println("Endpoint Hit: getDeviceWithID")
+	fmt.Println("Endpoint Hit: getDeviceWithID\n")
 
 	for _, device := range devices {
 		if device.ID == UUID {
 			w.WriteHeader(200)
 			json.NewEncoder(w).Encode(device)
-			fmt.Println("device found with UUID: " + uuidStr + " 200 OK")
+			fmt.Println("device found with UUID: " + uuidStr + "\n")
 			return
 		}
 	}
-
-	fmt.Println("device not found")
 	ErrorMsg := Error{"device not found"}
 	w.WriteHeader(404)
 	json.NewEncoder(w).Encode(ErrorMsg)
+	fmt.Println("device not found\n")
 }
 
 // The function "DELETE"
@@ -166,56 +165,59 @@ func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {
 	uuidStr := vars["uuid"]
 	UUID, _ := uuid.Parse(uuidStr)
 
-	fmt.Fprintf(w, "UUID: "+uuidStr)
-	fmt.Println("Endpoint Hit: deleteDeviceWithID")
+	fmt.Printf("UUID: " + uuidStr)
+	fmt.Println("Endpoint Hit: deleteDeviceWithID\n")
 
 	for index, device := range devices {
 		if device.ID == UUID {
 			devices = append(devices[:index], devices[index+1:]...)
 			w.WriteHeader(200)
-			fmt.Fprintf(w, " Device deleted")
+			fmt.Printf("Device deleted\n")
 			return
 		}
 	}
 
 	w.WriteHeader(404)
-	fmt.Fprintf(w, " No device found")
+	fmt.Printf("No device found\n")
 }
 
 // The function "POST"
 func addDeviceWithID(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: addDeviceWithID")
+	fmt.Println("Endpoint Hit: addDeviceWithID\n")
 	requestBody, _ := ioutil.ReadAll(r.Body)
 	var device Device
 	json.Unmarshal(requestBody, &device)
 
 	for _, d := range devices {
 		if d.ID == device.ID {
-			fmt.Fprintf(w, "Device already exists, 405 Method Not Allowed")
+			w.WriteHeader(405)
+			fmt.Printf("Device already exists\n")
 			return
 		}
 	}
 
 	devices = append(devices, device)
-	fmt.Fprintf(w, "Device added, 200 OK")
-	fmt.Printf("Device added, 200 OK")
+	w.WriteHeader(200)
+	fmt.Printf("Device added\n")
 }
 
 // The function "PATCH"
 func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: modifyDeviceWithID")
+	fmt.Println("Endpoint Hit: modifyDeviceWithID\n")
 	vars := mux.Vars(r)
 	uuidStr := vars["uuid"]
 	nameStr := vars["newName"]
 	// new name cannot be empty
 	if nameStr == " " {
-		fmt.Fprintf(w, "405 Method Not Allowed")
+		w.WriteHeader(405)
+		fmt.Printf("405 Method Not Allowed\n")
 		return
 	}
 	// new distance cannot be empty
 	setDistance := vars["newDistance"]
 	if setDistance == " " {
-		fmt.Fprintf(w, "405 Method Not Allowed")
+		w.WriteHeader(405)
+		fmt.Printf("405 Method Not Allowed\n")
 		return
 	}
 	UUID, _ := uuid.Parse(uuidStr)
@@ -223,13 +225,13 @@ func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
 		if device.ID == UUID {
 			devices[index].Name = nameStr
 			devices[index].Distance_m, _ = strconv.ParseFloat(setDistance, 64) //switch string to float64
-			fmt.Fprintf(w, "device found with UUID: "+uuidStr+" information updated\n")
-			fmt.Fprintf(w, "200 OK")
+			w.WriteHeader(200)
+			fmt.Printf("device found with UUID: " + uuidStr + " information updated\n")
 			return
 		}
 	}
-	fmt.Fprintf(w, "No device found, 404 Not Found")
-	fmt.Printf("No device found, 404 Not Found")
+	w.WriteHeader(404)
+	fmt.Printf("No device found\n")
 }
 
 // access the homepage
@@ -237,6 +239,7 @@ func homepage(w http.ResponseWriter, r *http.Request) {
 	initTime = time.Now().UnixNano()
 	// fmt.Fprintf(w, "Welcome to the homepage of EdgeX-TT. X_x\n")
 	// fmt.Fprintf(w, "(Init Time reset!)\n")
+	w.WriteHeader(200)
 	fmt.Println("Endpoint Hit: homepage")
 }
 

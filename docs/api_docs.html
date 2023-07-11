@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <title>API docs for EdgeX-TT: version 0.2</title>
+        <title>API docs for EdgeX-TT: version 0.3</title>
         <!-- import links to use -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
@@ -131,6 +131,11 @@
                 <h2>Homepage</h2>
                 func homepage(w http.ResponseWriter, r *http.Request) {}<br>
                 <!-- <p><img src="./photo/func5.png" width="25%" height="130px"></p> -->
+                /** Get the homepage<br>
+                * <br>
+                * Successful<br>
+                * RETURN (http code: 200 OK) : get devices information<br>
+                */
                 <h3>API show [GET]</h3>
                 Using the GET command in postman, and type: http://localhost:10000/, get in the main page.<br>
                 <p><img src="./photo/post0.png" width="40%" height="300px"></p>
@@ -144,7 +149,7 @@
                 * Will see the different after we delete a device or add a new device.<br>
                 * <br>
                 * Successful<br>
-                * RETURN (http code: 200 OK) : get devices information
+                * RETURN (http code: 200 OK) : get devices information<br>
                 */
                 <h3>API show [GET]</h3>
                 Using the GET command in postman, and type: http://localhost:10000/devices, get all the devices info.<br>
@@ -161,7 +166,7 @@
                 * RETURN (http code: 200 OK) : device found with UUID<br>
                 * <br>
                 * ERROR<br>
-                * RETURN (http code: 405 Method Not Allowed) : No device found<br>
+                * RETURN (http code: 404 Not Found) : No device found<br>
                 */
                 <h3>API show [GET]</h3>
                 Using the GET command in postman, and type: http://localhost:10000/device/{uuid}, get the certain device information.<br>
@@ -200,7 +205,7 @@
                 * RETURN (http code: 200 OK) : Device deleted<br>
                 * <br>
                 * ERROR<br>
-                * RETURN (http code: 405 Method Not Allowed) : No device found<br>
+                * RETURN (http code: 404 Not Found) : No device found<br>
                 */
                 <h3>API show [POST]</h3>
                 Using the GET function http://localhost:10000/devices, get all devices information first.<br>
