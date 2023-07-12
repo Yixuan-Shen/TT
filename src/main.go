@@ -4,11 +4,15 @@ import (
 	"container/list"
 	"encoding/json"
 	"fmt"
-	"github.com/google/uuid"
-	"github.com/gorilla/mux"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
+
+	"strconv"
+
+	"github.com/google/uuid"
+	"github.com/gorilla/mux"
 )
 
 type Duration struct {
@@ -16,6 +20,11 @@ type Duration struct {
 	StartingTime int64
 	EndingTime   int64
 	Distance     float64
+}
+
+type Error struct {
+	// Error message
+	ErrorMessage string
 }
 
 type Device struct {
@@ -76,27 +85,25 @@ func currentDistancePage(w http.ResponseWriter, r *http.Request) {
 
 // Show all the devices on the API
 func AllDevices(w http.ResponseWriter, r *http.Request) {
-	currentTime1 := time.Now().UnixNano()
-	pseudoDevices := []Device{
-		Device{uuid.New(), "Device1", DistanceCal(initTime, currentTime1)},
-		Device{uuid.New(), "Device2", 30},
-		Device{uuid.New(), "self", 0},
-	}
-	json.NewEncoder(w).Encode(pseudoDevices)
+	w.Header().Add("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(devices)
+	fmt.Fprintf(w, "200 OK")
 	fmt.Println("Endpoint Hit: AllDevices")
 }
 
-// INitialize the deviceList
+// Initialize the deviceList
 func initializeDL() (deviceList *list.List) {
 	deviceList = list.New()
 	return deviceList
 }
 
+// Update the data in the device list, using PushBack
 func updateDeviceList(nearbyDeviceList *list.List, name string, distance float64) *list.List {
 	nearbyDeviceList.PushBack(Device{uuid.New(), name, distance})
 	return nearbyDeviceList
 }
 
+// Clear all the information in device list
 func clearDeviceList(deviceList *list.List) {
 	deviceList = list.New()
 }
@@ -127,16 +134,109 @@ func connection(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: connection")
 }
 
+// The function "GET"
+func getDeviceWithID(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	uuidStr := vars["uuid"]
+	UUID, _ := uuid.Parse(uuidStr)
+
+	w.Header().Add("Content-Type", "application/json")
+
+	fmt.Println("UUID: " + uuidStr)
+	fmt.Println("Endpoint Hit: getDeviceWithID")
+
+	for _, device := range devices {
+		if device.ID == UUID {
+			w.WriteHeader(200)
+			json.NewEncoder(w).Encode(device)
+			fmt.Println("device found with UUID: " + uuidStr + " 200 OK")
+			return
+		}
+	}
+
+	fmt.Println("device not found")
+	ErrorMsg := Error{"device not found"}
+	w.WriteHeader(404)
+	json.NewEncoder(w).Encode(ErrorMsg)
+}
+
+// The function "DELETE"
+func deleteDeviceWithID(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	uuidStr := vars["uuid"]
+	UUID, _ := uuid.Parse(uuidStr)
+
+	fmt.Fprintf(w, "UUID: "+uuidStr)
+	fmt.Println("Endpoint Hit: deleteDeviceWithID")
+
+	for index, device := range devices {
+		if device.ID == UUID {
+			devices = append(devices[:index], devices[index+1:]...)
+			w.WriteHeader(200)
+			fmt.Fprintf(w, " Device deleted")
+			return
+		}
+	}
+
+	w.WriteHeader(404)
+	fmt.Fprintf(w, " No device found")
+}
+
+// The function "POST"
+func addDeviceWithID(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Endpoint Hit: addDeviceWithID")
+	requestBody, _ := ioutil.ReadAll(r.Body)
+	var device Device
+	json.Unmarshal(requestBody, &device)
+
+	for _, d := range devices {
+		if d.ID == device.ID {
+			fmt.Fprintf(w, "Device already exists, 405 Method Not Allowed")
+			return
+		}
+	}
+
+	devices = append(devices, device)
+	fmt.Fprintf(w, "Device added, 200 OK")
+	fmt.Printf("Device added, 200 OK")
+}
+
+// The function "PATCH"
+func modifyDeviceWithID(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Endpoint Hit: modifyDeviceWithID")
+	vars := mux.Vars(r)
+	uuidStr := vars["uuid"]
+	nameStr := vars["newName"]
+	// new name cannot be empty
+	if nameStr == " " {
+		fmt.Fprintf(w, "405 Method Not Allowed")
+		return
+	}
+	// new distance cannot be empty
+	setDistance := vars["newDistance"]
+	if setDistance == " " {
+		fmt.Fprintf(w, "405 Method Not Allowed")
+		return
+	}
+	UUID, _ := uuid.Parse(uuidStr)
+	for index, device := range devices {
+		if device.ID == UUID {
+			devices[index].Name = nameStr
+			devices[index].Distance_m, _ = strconv.ParseFloat(setDistance, 64) //switch string to float64
+			fmt.Fprintf(w, "device found with UUID: "+uuidStr+" information updated\n")
+			fmt.Fprintf(w, "200 OK")
+			return
+		}
+	}
+	fmt.Fprintf(w, "No device found, 404 Not Found")
+	fmt.Printf("No device found, 404 Not Found")
+}
+
 // access the homepage
 func homepage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the homepage of TT. X_x\n")
-	fmt.Fprintf(w, "(Init Time reset!)\n")
 	initTime = time.Now().UnixNano()
-	fmt.Fprintf(w, "There are several features that we can use on this API:\n")
-	fmt.Fprintf(w, "+---------------------------------------+\n")
-	fmt.Fprintf(w, "/currentDistance -> round distance\n/devices -> devices info\n/currentOnewayDistance -> one way distance\n")
-	fmt.Fprintf(w, "+---------------------------------------+\n")
-	fmt.Fprintf(w, "\n\n\n\n\n\n\n\n\n\n\nFounder: Yixuan Shen, HanZhen Qin, Kaiyang Chang\n")
+	// fmt.Fprintf(w, "Welcome to the homepage of EdgeX-TT. X_x\n")
+	// fmt.Fprintf(w, "(Init Time reset!)\n")
 	fmt.Println("Endpoint Hit: homepage")
 }
 
@@ -145,21 +245,29 @@ func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homepage)
 	myRouter.HandleFunc("/currentDistance", currentDistancePage)
-	myRouter.HandleFunc("/devices", AllDevices)
+	myRouter.HandleFunc("/devices", AllDevices).Methods("GET")
+
+	myRouter.HandleFunc("/device", addDeviceWithID).Methods("POST")
+	myRouter.HandleFunc("/device/{uuid}", getDeviceWithID).Methods("GET")
+	myRouter.HandleFunc("/device/{uuid}", deleteDeviceWithID).Methods("DELETE")
+	myRouter.HandleFunc("/device/{uuid}/{newName}/{newDistance}", modifyDeviceWithID).Methods("PATCH")
+
 	myRouter.HandleFunc("/currentOnewayDistance", onewayDistancePage)
 	myRouter.HandleFunc("/connection", connection)
+
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
 }
 
+// Global variable for the devices array
+var devices = []Device{
+	Device{uuid.New(), "Device1", 50},
+	Device{uuid.New(), "Device2", 30},
+	Device{uuid.New(), "self", 0},
+}
+
 func main() {
-	// currentTime1 := time.Now().UnixNano()
-	// fmt.Println("Current Timestamp: ", currentTime1)
-	// time.Sleep(30 * time.Microsecond) // Simulate bluetooth connection and passing time
-	// currentTime2 := time.Now().UnixNano()
-	// fmt.Println("Current Timestamp: ", currentTime2)
-	// dis := DistanceCal(currentTime1, currentTime2)
-	// fmt.Println(dis)
 	initTime = time.Now().UnixNano()
 	fmt.Println("REST API with Mux Routers")
+	fmt.Println("Server Started at: http://localhost:10000/")
 	handleRequests()
 }
