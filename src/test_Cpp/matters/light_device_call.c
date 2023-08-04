@@ -72,3 +72,49 @@ void light_device_callback::light_device_callBack(const ChipDeviceEvent * event,
     }
 }
 
+void light_device_callback::Oninternet_connection_with_light_device(const ChipDeviceEvent * callbackService)
+{
+    if (callbackService->internet_connection_with_light_device.IPv6 == light_connection_Established)
+    {
+        printf("IPv6 Server...");
+        chip::app::DnssdServer::Instance().StartServer();
+    }
+    else if (callbackService->internet_connection_with_light_device.IPv6 == light_connection_Lost)
+    {
+        printf("Lost IPv6 connectivity...");
+    }
+    if (callbackService->internet_connection_with_light_device.IPv4 == light_connection_Established)
+    {
+        printf("IPv4 Server...");
+        chip::app::DnssdServer::Instance().StartServer();
+    }
+    else if (callbackService->internet_connection_with_light_device.IPv4 == light_connection_Lost)
+    {
+        printf("404 not found IPv4 Server...");
+    }
+}
+
+void light_device_callback::PostAttributeChangeCallback(EndpointId endpointId, ClusterId id, AttributeId attributeId, uint8_t type,
+                                                  uint16_t size, uint8_t * value)
+{
+    switch (id)
+    {
+    case app::Clusters::Identify::Id:
+        OnIdentifyPostAttributeChangeCallback(endpointId, attributeId, value);
+        break;
+
+    default:
+        ChipLogProgress(Zcl, "Unknown cluster ID: " ChipLogFormatMEI, ChipLogValueMEI(clusterId));
+        break;
+    }
+}
+
+void light_device_time(Layer * systemLayer, void * appState)
+{
+    if (identifyTimerCount) { // If timerCount is non-zero, then we are in identify mode
+        systemLayer->StartTimer(Clock::Milliseconds32(kIdentifyTimerDelayMS), light_device_time, appState);
+        // Decrement the timer count.
+        identifyTimerCount--;
+    }
+}
+
