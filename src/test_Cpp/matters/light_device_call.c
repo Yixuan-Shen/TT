@@ -94,13 +94,13 @@ void light_device_callback::Oninternet_connection_with_light_device(const ChipDe
     }
 }
 
-void light_device_callback::PostAttributeChangeCallback(EndpointId endpointId, ClusterId id, AttributeId attributeId, uint8_t type,
+void light_device_callback::attributeChangeCall(EndpointId endpointId, ClusterId id, AttributeId attributeId, uint8_t type,
                                                   uint16_t size, uint8_t * value)
 {
     switch (id)
     {
     case app::Clusters::Identify::Id:
-        OnIdentifyPostAttributeChangeCallback(endpointId, attributeId, value);
+        OnIdentifyattributeChangeCall(endpointId, attributeId, value);
         break;
 
     default:

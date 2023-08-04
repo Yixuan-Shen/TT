@@ -7,9 +7,8 @@ class light_device_callback : public chip::DeviceManager::CHIPDeviceManagerCallb
 {
 public:
     virtual void light_device_callBack(const chip::DeviceLayer::ChipDeviceEvent * event, intptr_t arg);
-    void PostAttributeChangeCallback(chip::EndpointId endpointId, chip::ClusterId clusterId, chip::AttributeId attributeId, uint8_t type, uint16_t size, uint8_t * value) override;
+    void arrtibuteChangeCall(chip::EndpointId endpointId, chip::ClusterId clusterId, chip::AttributeId attributeId, uint8_t type, uint16_t size, uint8_t * value) override;
 
 private:
-    void OnInternetConnectivityChange(const chip::DeviceLayer::ChipDeviceEvent * event);
     void Oninternet_connection_with_light_device(chip::EndpointId endpointId, chip::AttributeId attributeId, uint8_t * value);
 };
