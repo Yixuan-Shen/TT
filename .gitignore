@@ -22,3 +22,4 @@ go.work
 
 # OSX file
 .DS_Store
+.vscode/
